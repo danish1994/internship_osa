@@ -58,7 +58,8 @@
 <link href="css/prettyPhoto.css" rel="stylesheet">
 <link href="css/animate.css" rel="stylesheet">
 <link href="css/main.css" rel="stylesheet">
-
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.prettyPhoto.js"></script>
