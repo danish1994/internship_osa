@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Events</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/font-awesome.min.css" rel="stylesheet">
+<link href="css/prettyPhoto.css" rel="stylesheet">
+<link href="css/animate.css" rel="stylesheet">
+<link href="css/main.css" rel="stylesheet">
+<!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+<link rel="shortcut icon" href="images/ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="144x144"
+	href="images/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114"
+	href="images/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"
+	href="images/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed"
+	href="images/ico/apple-touch-icon-57-precomposed.png">
+</head>
+<!--/head-->
+<body>
+	<header class="navbar navbar-inverse navbar-fixed-top wet-asphalt"
+		role="banner">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html"><img
+					src="images/logo.png" alt="logo"></a>
+			</div>
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="about-us.html">About Us</a></li>
+					<li><a href="events.html">Events</a></li>
+					<li><a href="/loginCheck">Login</a></li>
+					<li><a href="contact-us.html">Contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</header>
+	<!--/header-->
+
+	<section id="title" class="emerald">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					<h1>Events</h1>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--/#title-->
+	<section id="blog" class="container">
+		<div class="row">
+			<aside class="col-sm-4 col-sm-push-8">
+				<div class="widget">
+					<h3>Recent Events</h3>
+				</div>
+			</aside>
+
+			<section id="blog" class="container">
+				<script>
+					var length = 4;
+					var l;
+					var events;
+					loadAllEvents();
+					function increaseLength() {
+						length += 4;
+						showEvent();
+					}
+					function loadAllEvents() {
+						var xmlhttp = new XMLHttpRequest();
+						var url = '/loadEvent?type=all';
+						xmlhttp.onreadystatechange = function() {
+							if (xmlhttp.readyState % 5 == 4
+									&& xmlhttp.status == 200) {
+								events = JSON.parse(xmlhttp.responseText);
+								showEvent();
+							}
+						}
+						xmlhttp.open("GET", url, true);
+						xmlhttp.send();
+					}
+					function loadPopularEvents() {
+						var xmlhttp = new XMLHttpRequest();
+						var url = '/loadEvent?type=popular';
+						xmlhttp.onreadystatechange = function() {
+							if (xmlhttp.readyState % 5 == 4
+									&& xmlhttp.status == 200) {
+								events = JSON.parse(xmlhttp.responseText);
+								showEvent();
+							}
+						}
+						xmlhttp.open("GET", url, true);
+						xmlhttp.send();
+					}
+					function loadTodayEvents() {
+						var xmlhttp = new XMLHttpRequest();
+						var url = '/loadEvent?type=today';
+						xmlhttp.onreadystatechange = function() {
+							if (xmlhttp.readyState % 5 == 4
+									&& xmlhttp.status == 200) {
+								events = JSON.parse(xmlhttp.responseText);
+								showEvent();
+							}
+						}
+						xmlhttp.open("GET", url, true);
+						xmlhttp.send();
+					}
+					function showEvent() {
+						var out = "";
+						var i, l = events.length;
+						if (length > events.length)
+							l = events.length;
+						for (i = 0; i < l; i++) {
+							var imgSrc = events[i].imgSrc;
+							var link = '/Single.jsp?eventID='
+									+ events[i].imgSrc;
+							var tag = events[i].tag;
+							var name = events[i].name;
+							var date = events[i].date;
+							var commentCount = events[i].commentCount;
+							var desc = events[i].desc;
+							out += '<div class="blog-item">';
+							out += '<img class="img-responsive img-blog" src="'
+									+ imgSrc + '" width="100%" alt="" />';
+							out += '<div class="blog-content"><a href="'+link+'"><h3>'
+									+ tag + '</h3></a>';
+							out += '<div class="entry-meta"><span><i class="icon-user"></i> <a href="#">'
+									+ name + '</a></span>';
+							out += '<span><i class="icon-calendar"></i>'
+									+ date
+									+ '</span> <span><i class="icon-comment"></i>';
+							out += '<a href="single.html#comments">'
+									+ commentCount
+									+ ' Comments</a></span></div>';
+							out += '<p>' + desc + '</p>';
+							out += '<a class="btn btn-default" href="'+link+'">Read More <i class="icon-angle-right"></i></a></div></div>';
+						}
+						if (l > 0 && l < events.lenght)
+							out += '<button class="btn btn-default" onClick="increaseLength()">Show More Events</button>';
+						else if (l == events.length)
+							out += '<h4>No More Events</h4>';
+						else
+							out += '<h4>No More Eventss</h4>';
+						out += '<br />'
+						document.getElementById("events").innerHTML = out;
+					}
+				</script>
+
+				<div class="col-sm-8 col-sm-pull-4">
+					<button class="btn btn-default" onClick="loadAllEvents()">All
+						Events</button>
+					<button class="btn btn-default" onClick="loadPopularEvents()">Popular
+						Events</button>
+					<button class="btn btn-default" onClick="loadTodayEvents()">Todays
+						Events</button>
+					<div class="blog" id="events"></div>
+				</div>
+				<!--/.col-md-8-->
+			</section>
+		</div>
+	</section>
+	<!--/.row-->
+	<!--/#blog-->
+	<footer id="footer" class="midnight-blue">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">&copy; 2015. All Rights Reserved.</div>
+				<div class="col-sm-6">
+					<ul class="pull-right">
+						<li><a href="#">Home</a></li>
+						<li><a href="#">About Us</a></li>
+						<li><a href="#">Contact Us</a></li>
+						<li><a id="gototop" class="gototop" href="#"><i
+								class="icon-chevron-up"></i></a></li>
+						<!--#gototop-->
+					</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--/#footer-->
+
+
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.prettyPhoto.js"></script>
+	<script src="js/jquery.isotope.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>
