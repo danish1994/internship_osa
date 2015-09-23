@@ -8,15 +8,18 @@ import com.internship.osa.entity.Event;
 
 public class EventDao {
 
-	public static void save(String eventID, String place, String tag, String description,
-			Date eventDate, String uID, int subCount, Date date) {
-		Event eve = new Event(eventID,place,tag,description,eventDate,uID,subCount,date);
+	public static void save(String eventID, String place, String tag,
+			String description, Date eventDate, String uID, int subCount,
+			Date date) {
+		Event eve = new Event(eventID, place, tag, description, eventDate, uID,
+				subCount, date);
 		ofy().save().entity(eve).now();
 		ofy().clear();
 	}
-	
-	public static void update(String eventID, String place, String tag, String description,
-			Date eventDate, String uID, int subCount, Date date) {
+
+	public static void update(String eventID, String place, String tag,
+			String description, Date eventDate, String uID, int subCount,
+			Date date) {
 		Event eve = ofy().load().type(Event.class).id(eventID).now();
 		eve.setDate(date);
 		eve.setDescription(description);
@@ -27,18 +30,18 @@ public class EventDao {
 		ofy().save().entity(eve).now();
 		ofy().clear();
 	}
-	
-	public static void SubscribeCount(String eventID) {
-		Event pd=ofy().load().type(Event.class).id(eventID).now();
-		pd.setSubCount(ofy().load().type(Event.class).filter("event",pd.getEventID()).count());
+
+	public static void SubscribeCount(String eventID, int count) {
+		Event pd = ofy().load().type(Event.class).id(eventID).now();
+		pd.setSubCount(count++);
 		ofy().save().entity(pd).now();
 		System.out.println("Subscribe Count + 1");
 	}
 
-	public static void SubscribeMinus(String eventID) {
-		Event pd=ofy().load().type(Event.class).id(eventID).now();
-		pd.setSubCount(ofy().load().type(Event.class).filter("event",pd.getEventID()).count());
+	public static void SubscribeMinus(String eventID, int count) {
+		Event pd = ofy().load().type(Event.class).id(eventID).now();
+		pd.setSubCount(count--);
 		ofy().save().entity(pd).now();
-				System.out.println("Subscribe Count - 1");
+		System.out.println("Subscribe Count - 1");
 	}
 }

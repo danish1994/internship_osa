@@ -10,8 +10,19 @@ import static com.internship.osa.dao.UserDetailsDao.delete;
 public class UserRejectController extends HttpServlet{
 	public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException
 	{
+		HttpSession session = req.getSession(false);
+		String type = null;
 		String uID=req.getParameter("uID");
-		delete(uID);
+		try{
+			type = (String) session.getAttribute("Type");
+		}catch(Exception e)
+		{
+			res.sendRedirect("/loginCheck");
+		}
+		if(type.equals("admin"))
+			delete(uID);
+		else
+			res.sendRedirect("/loginCheck");
 		res.sendRedirect("AccountValid.jsp");
 	}
 }

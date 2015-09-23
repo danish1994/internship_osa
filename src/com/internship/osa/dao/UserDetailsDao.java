@@ -45,8 +45,10 @@ public class UserDetailsDao {
 		res = details.hasNext();
 		while (details.hasNext()) {
 			ud = details.next();
-			if (ud.getuID().equals(uID) && ud.getPass().equals(pass)
-					&& ud.getStatus().equals(true)) {
+			if (ud.getuID().equals(uID)
+					&& ud.getPass().equals(pass)
+					&& (ud.getStatus().equals(true) || ud.getType().equals(
+							"student"))) {
 				res = true;
 				break;
 			} else
@@ -56,7 +58,7 @@ public class UserDetailsDao {
 	}
 
 	// Modify Name
-	public static void modifyDetails(String uID, String name,String pass) {
+	public static void modifyDetails(String uID, String name, String pass) {
 		UserDetails ud = ofy().load().type(UserDetails.class).id(uID).now();
 		ud.setName(name);
 		ud.setPass(pass);
@@ -69,9 +71,20 @@ public class UserDetailsDao {
 	public static void modifyPassword(String uID, String pass) {
 		UserDetails ud = ofy().load().type(UserDetails.class).id(uID).now();
 		ud.setPass(pass);
+		ud.setSource("form");
 		ofy().save().entity(ud).now();
 		ofy().clear();
 		System.out.println("Password Changed");
+	}
+
+	// Modify Type
+	public static void modifyType(String uID, String type, boolean valid) {
+		UserDetails ud = ofy().load().type(UserDetails.class).id(uID).now();
+		ud.setType(type);
+		ud.setStatus(valid);
+		ofy().save().entity(ud).now();
+		ofy().clear();
+		System.out.println("Type Changed");
 	}
 
 	// Return Name
@@ -89,19 +102,30 @@ public class UserDetailsDao {
 		UserDetails ud = ofy().load().type(UserDetails.class).id(uID).now();
 		return ud.getName();
 	}
-	
-	//Change Status
-	public static void modify(String uID,boolean valid)
-	{
+
+	// Change Status
+	public static void modify(String uID, boolean valid) {
 		UserDetails ud = ofy().load().type(UserDetails.class).id(uID).now();
 		ud.setStatus(valid);
+		ud.setType("faculty");
 		ofy().save().entity(ud).now();
 	}
-	
-	//Delete
-	public static void delete(String uID)
-	{
+
+	// Delete
+	public static void delete(String uID) {
 		UserDetails ud = ofy().load().type(UserDetails.class).id(uID).now();
 		ofy().delete().entity(ud).now();
+	}
+
+	// Return Type
+	public static String returnType(String uID) {
+		UserDetails ud = ofy().load().type(UserDetails.class).id(uID).now();
+		return ud.getType();
+	}
+
+	// Return Status
+	public static boolean returnValid(String uID) {
+		UserDetails ud = ofy().load().type(UserDetails.class).id(uID).now();
+		return ud.getStatus();
 	}
 }

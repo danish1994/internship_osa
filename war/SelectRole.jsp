@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>Contact Us</title>
+<title>Login</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/font-awesome.min.css" rel="stylesheet">
 <link href="css/prettyPhoto.css" rel="stylesheet">
@@ -50,65 +52,45 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-6">
-					<h1>Contact Us</h1>
+					<h1>Select Role</h1>
 				</div>
 			</div>
 		</div>
 	</section>
 	<!--/#title-->
-
-	<section id="contact-page" class="container">
-		<div class="row row-centered" style="width:100%">
-			<div class="col-md-2" style="width:100%">
-				<h4>Contact Form</h4>
-				<form action="/contactUs" method="post">
-					<fieldset class="registration-form">
-						<table class="about-top" style="align: center;">
-							<tr>
-								<td><h3>Name</h3></td>
-								<td><h3>Email</h3></td>
-							</tr>
-							<tr>
-
-								<td>
-									<div class="form-group">
-										<input type="text" name="Name" required placeholder="Name"
-											style="width: 100%">
-									</div>
-								</td>
-								<td>
-									<div class="form-group">
-										<input type="email" name="Email" required placeholder="Email"
-											style="width: 100%">
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td colspan=2>
-									<h3>Message</h3>
-								</td>
-							</tr>
-							<tr>
-								<td colspan=2>
-									<div class="form-group">
-										<textarea class="form-control" rows="10" cols="200"
-											id="comment" name="Msg" required></textarea>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td colspan=3><input type="submit" name="submit"
-									class="btn btn-warning btn-lg" value="Add Event"
-									style="width: 100%;" /></td>
-							</tr>
-						</table>
-					</fieldset>
-				</form>
-			</div>
-			<!--/.col-sm-8-->
+	<%
+		try {
+			String loginSource = (String) session
+					.getAttribute("loginSource");
+			session.removeAttribute("loginSource");
+			if (loginSource.equals("google")) {
+	%>
+	<section id="registration" class="container">
+		<div class="center" style="width: 100%">
+			<form class="center" action="/selectRole" method="post">
+				<h3>Register</h3>
+				<fieldset class="registration-form">
+					<div class="form-group">
+						<input type="radio" name="type" value="student" checked>
+						Student<span></span> <input type="radio" name="type"
+							value="faculty"> Faculty
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Register"
+							class="btn btn-success btn-md btn-block">
+					</div>
+				</fieldset>
+			</form>
 		</div>
 	</section>
-	<!--/#contact-page-->
+	<%
+		}else
+			response.sendRedirect("/loginCheck");
+		} catch (Exception e) {
+			response.sendRedirect("/loginCheck");
+		}
+	%>
+	<!--/#registration-->
 	<!--/#bottom-->
 	<footer id="footer" class="midnight-blue">
 		<div class="container">

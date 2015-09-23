@@ -58,20 +58,20 @@ public class SubscribeController extends HttpServlet {
 				}
 			} else {
 				if (SubscribeStatus.equals("no")) {
-					SubscribeCount(eventID);
 					DateFormat dateFormat = new SimpleDateFormat(
 							"yyyy/MM/dd");
 					Date date = new Date();
 					String id = dateFormat.format(date);
 					addSubscribe(uID, eventID, id + uID);
+					SubscribeCount(eventID,count);
 					try {
 						json.put("SubscribeType", "Unsubscribe");
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
 				} else if (SubscribeStatus.equals("yes")) {
-					SubscribeMinus(eventID);
 					removeSubscribe(eventID, uID);
+					SubscribeMinus(eventID,count);
 					try {
 						json.put("SubscribeType", "Subscribe");
 					} catch (JSONException e) {

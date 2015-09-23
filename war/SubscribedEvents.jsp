@@ -5,7 +5,7 @@
 <%@ page import="java.util.Iterator"%>
 <%@ page import="java.util.List"%>
 <%@ page import="static com.internship.osa.dao.OfyService.ofy"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -43,9 +43,9 @@
 	%>
 		<div class="blog-item">
 			<img class="img-responsive img-blog" src="<%= e.getEventID() %>"
-				width="100%" alt="" "/>
+				width="100%" alt="" />
 			<div class="blog-content">
-				<a href="Single.jsp?eventID=<%=e.getEventID()%>"><h3><%= e.getTag() %></h3></a>
+				<h3><a href="Single.jsp?eventID=<%=e.getEventID()%>"><%= e.getTag() %></a></h3>
 				<div class="entry-meta">
 					<span><i class="icon-user"></i> <a href="#"><%= e.getTag() %></a></span>
 					<span><i class="icon-calendar"></i> <%= e.getEventDate() %></span>

@@ -58,67 +58,71 @@
 	<!--/#title-->
 
 	<section id="registration" class="container">
-		<table width="100%">
-			<tr>
-				<td>
-					<form class="center" action="/login" method="post">
-						<h3>Login</h3>
-						<fieldset class="registration-form">
-							<div class="form-group">
-								<input type="email" id="email" name="email" placeholder="E-mail"
-									class="form-control" required>
-							</div>
-							<div class="form-group">
-								<input type="password" id="password" name="password"
-									placeholder="Password" class="form-control" required>
-							</div>
-							<div class="form-group">
-								<input type="submit" value="Login"
-									class="btn btn-success btn-md btn-block">
-							</div>
-							<!-- 
-							<div class="form-group">
-								<a
-									href="https://accounts.google.com/o/oauth2/auth?&client_id=710386576595-m43vqev3u5rq69lhlt4hdl00hntu8gcn.apps.googleusercontent.com&redirect_uri=http://internshiposa.appspot.com/googlecallback&approval_prompt=force&response_type=code&scope=profile">
-									Sign in with Google </a>
-							</div>
-							 -->
-							<div class="form-group">
-								<a href="forgot.html">Forgot Password</a>
-							</div>
-						</fieldset>
-					</form>
-				</td>
-				<td>
-					<form class="center" action="/register" method="post">
-						<h3>Register</h3>
-						<fieldset class="registration-form">
-							<div class="form-group">
-								<input type="text" id="name" name="name" placeholder="Name"
-									class="form-control" required>
-							</div>
-							<div class="form-group">
-								<input type="email" id="email" name="email" placeholder="E-mail"
-									class="form-control" required>
-							</div>
-							<div class="form-group">
-								<input type="password" id="password" name="password"
-									placeholder="Password" class="form-control" required>
-							</div>
-							<div class="form-group">
-								<input type="radio" name="type" value="student" checked>
-								Student<span></span> <input type="radio" name="type"
-									value="faculty"> Faculty
-							</div>
-							<div class="form-group">
-								<input type="submit" value="Register"
-									class="btn btn-success btn-md btn-block">
-							</div>
-						</fieldset>
-					</form>
-				</td>
-			</tr>
-		</table>
+		<div class="center" style="width:100%">
+			<div class="col-md-2 col-md-offset-3" style="width:100%">
+				<table>
+					<tr>
+						<td>
+							<form class="center" action="/login" method="post">
+								<h3>Login</h3>
+								<fieldset class="registration-form">
+									<div class="form-group">
+										<input type="email" id="email" name="email"
+											placeholder="E-mail" class="form-control" required>
+									</div>
+									<div class="form-group">
+										<input type="password" id="password" name="password"
+											placeholder="Password" class="form-control" required>
+									</div>
+									<div class="form-group">
+										<input type="submit" value="Login"
+											class="btn btn-success btn-md btn-block">
+									</div>
+									<div class="form-group">
+										<a
+											href="https://accounts.google.com/o/oauth2/auth?&client_id=710386576595-m43vqev3u5rq69lhlt4hdl00hntu8gcn.apps.googleusercontent.com&redirect_uri=http://internshiposa.appspot.com/googlecallback&approval_prompt=force&response_type=code&scope=email">
+											Sign in with Google </a>
+									</div>
+									<div class="form-group">
+										<a href="forgot.html">Forgot Password</a>
+									</div>
+								</fieldset>
+							</form>
+						</td>
+						<td><h3><span></span>OR<span></span></h3>
+								</td>
+						<td>
+							<form class="center" action="/register" method="post">
+								<h3>Register</h3>
+								<fieldset class="registration-form">
+									<div class="form-group">
+										<input type="text" id="name" name="name" placeholder="Name"
+											class="form-control" required>
+									</div>
+									<div class="form-group">
+										<input type="email" id="email" name="email"
+											placeholder="E-mail" class="form-control" required>
+									</div>
+									<div class="form-group">
+										<input type="password" id="password" name="password"
+											placeholder="Password" class="form-control" required>
+									</div>
+									<div class="form-group">
+										<input type="radio" name="type" value="student" checked>
+										Student<span></span> <input type="radio" name="type"
+											value="faculty"> Faculty
+									</div>
+									<div class="form-group">
+										<input type="submit" value="Register"
+											class="btn btn-success btn-md btn-block">
+									</div>
+								</fieldset>
+							</form>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
 	</section>
 	<!--/#registration-->
 	<!--/#bottom-->

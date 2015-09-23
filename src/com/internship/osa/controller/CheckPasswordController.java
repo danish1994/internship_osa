@@ -14,8 +14,14 @@ public class CheckPasswordController extends HttpServlet {
 	public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException
 	{
 		String pass = req.getParameter("password");
-		String uID = req.getParameter("uID");
+		String uID = null;
 		HttpSession session = req.getSession();
+		try{
+			uID = (String) session.getAttribute("uID");
+		}catch(Exception e)
+		{
+			res.sendRedirect("/loginCheck");
+		}
 		if(validate(uID,pass))
 		{
 			session.setAttribute("verified", "yes");

@@ -26,7 +26,7 @@ public class ContactController extends HttpServlet {
 		Message msg = new MimeMessage(session);
 		try {
 			msg.setFrom(new InternetAddress("danish8802204230@gmail.com",
-					"The House of Change"));
+					"Event Creater"));
 			//Default Admins
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(
 					"danish8802204230@gmail.com", "admin"));
@@ -38,6 +38,6 @@ public class ContactController extends HttpServlet {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-		res.sendRedirect("about.html");
+		res.sendRedirect("index.html");
 	}
 }

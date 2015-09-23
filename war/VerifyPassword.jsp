@@ -7,7 +7,7 @@
 <%@ page import="java.text.DateFormat"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="static com.internship.osa.dao.OfyService.ofy"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -22,10 +22,6 @@
 <link href="css/main.css" rel="stylesheet">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
-<!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
-    <script src="js/respond.min.js"></script>
-    <![endif]-->
 </head>
 <!--/head-->
 <body>
@@ -92,6 +88,7 @@
 		}
 		else
 		{
+			session.setAttribute("verified", "yes");
 			response.sendRedirect("Settings.jsp");	
 		}
 	}catch(Exception e)

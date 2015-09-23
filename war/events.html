@@ -45,7 +45,6 @@
 		</div>
 	</header>
 	<!--/header-->
-
 	<section id="title" class="emerald">
 		<div class="container">
 			<div class="row">
@@ -56,12 +55,10 @@
 		</div>
 	</section>
 	<!--/#title-->
-	<section id="blog" class="container">
+	<section class="container">
 		<div class="row">
 			<aside class="col-sm-4 col-sm-push-8">
-				<div class="widget">
-					<h3>Recent Events</h3>
-				</div>
+				<div class="widget" id="recent"></div>
 			</aside>
 
 			<section id="blog" class="container">
@@ -69,10 +66,12 @@
 					var length = 4;
 					var l;
 					var events;
+					var recentEvents;
 					loadAllEvents();
+					loadRecentEvents();
 					function increaseLength() {
 						length += 4;
-						showEvent();
+						showEvent(events);
 					}
 					function loadAllEvents() {
 						var xmlhttp = new XMLHttpRequest();
@@ -80,8 +79,9 @@
 						xmlhttp.onreadystatechange = function() {
 							if (xmlhttp.readyState % 5 == 4
 									&& xmlhttp.status == 200) {
+								length = 4;
 								events = JSON.parse(xmlhttp.responseText);
-								showEvent();
+								showEvent(events);
 							}
 						}
 						xmlhttp.open("GET", url, true);
@@ -93,8 +93,9 @@
 						xmlhttp.onreadystatechange = function() {
 							if (xmlhttp.readyState % 5 == 4
 									&& xmlhttp.status == 200) {
+								length = 4;
 								events = JSON.parse(xmlhttp.responseText);
-								showEvent();
+								showEvent(events);
 							}
 						}
 						xmlhttp.open("GET", url, true);
@@ -106,27 +107,28 @@
 						xmlhttp.onreadystatechange = function() {
 							if (xmlhttp.readyState % 5 == 4
 									&& xmlhttp.status == 200) {
+								length = 4;
 								events = JSON.parse(xmlhttp.responseText);
-								showEvent();
+								showEvent(events);
 							}
 						}
 						xmlhttp.open("GET", url, true);
 						xmlhttp.send();
 					}
-					function showEvent() {
+					function showEvent(event) {
 						var out = "";
-						var i, l = events.length;
-						if (length > events.length)
-							l = events.length;
+						var i, l = length;
+						if (length > event.length) {
+							l = event.length;
+						}
 						for (i = 0; i < l; i++) {
-							var imgSrc = events[i].imgSrc;
-							var link = '/Single.jsp?eventID='
-									+ events[i].imgSrc;
-							var tag = events[i].tag;
-							var name = events[i].name;
-							var date = events[i].date;
-							var commentCount = events[i].commentCount;
-							var desc = events[i].desc;
+							var imgSrc = event[i].imgSrc;
+							var link = '/Single.jsp?eventID=' + event[i].imgSrc;
+							var tag = event[i].tag;
+							var name = event[i].name;
+							var date = event[i].date;
+							var commentCount = event[i].commentCount;
+							var desc = event[i].desc;
 							out += '<div class="blog-item">';
 							out += '<img class="img-responsive img-blog" src="'
 									+ imgSrc + '" width="100%" alt="" />';
@@ -143,17 +145,40 @@
 							out += '<p>' + desc + '</p>';
 							out += '<a class="btn btn-default" href="'+link+'">Read More <i class="icon-angle-right"></i></a></div></div>';
 						}
-						if (l > 0 && l < events.lenght)
+						if (l > 0 && l < event.length) {
 							out += '<button class="btn btn-default" onClick="increaseLength()">Show More Events</button>';
-						else if (l == events.length)
+						} else if (l == event.length)
 							out += '<h4>No More Events</h4>';
 						else
-							out += '<h4>No More Eventss</h4>';
+							out += '<h4>No More Events</h4>';
 						out += '<br />'
 						document.getElementById("events").innerHTML = out;
 					}
+					function loadRecentEvents() {
+						var xmlhttp = new XMLHttpRequest();
+						var url = '/loadRecentEvent';
+						xmlhttp.onreadystatechange = function() {
+							if (xmlhttp.readyState % 5 == 4
+									&& xmlhttp.status == 200) {
+								recentEvents = JSON.parse(xmlhttp.responseText);
+								showRecentEvent(recentEvents);
+							}
+						}
+						xmlhttp.open("GET", url, true);
+						xmlhttp.send();
+					}
+					function showRecentEvent(event) {
+						var out = "<h3>Recent Events</h3>";
+						var i, l = length;
+						for (i = 0; i < event.length; i++) {
+							var imgSrc = event[i].imgSrc;
+							var link = '/Single.jsp?eventID=' + event[i].imgSrc;
+							var tag = event[i].tag;
+							out += '<h4><a href="'+link+'">'+tag+'</a></h4>';
+						}
+						document.getElementById("recent").innerHTML = out;
+					}
 				</script>
-
 				<div class="col-sm-8 col-sm-pull-4">
 					<button class="btn btn-default" onClick="loadAllEvents()">All
 						Events</button>

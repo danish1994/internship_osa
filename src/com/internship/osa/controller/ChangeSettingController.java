@@ -12,10 +12,16 @@ import com.internship.osa.dao.CommentsDao;
 public class ChangeSettingController extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws IOException, ServletException {
-		String uID = req.getParameter("uID");
+		HttpSession session = req.getSession(false);
+		String uID = null;
+		try{
+			uID = (String) session.getAttribute("uID");
+		}catch(Exception e)
+		{
+			res.sendRedirect("/loginCheck");
+		}
 		String name = req.getParameter("name");
 		String pass = req.getParameter("pass");
-		HttpSession session = req.getSession(false);
 		session.setAttribute("Name",name);
 		//Change Details
 		UserDetailsDao.modifyDetails(uID, name,pass);

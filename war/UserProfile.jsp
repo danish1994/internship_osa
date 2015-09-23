@@ -52,8 +52,6 @@
 		</div>
 	</header>
 	<!--/header-->
-
-
 	<section id="title" class="emerald">
 		<div class="container">
 			<div class="row">
@@ -70,36 +68,39 @@
 		String type = (String) session.getAttribute("Type");
 	%>
 	<section id="middle" class="container">
-		<div class="collapse navbar-collapse">
-			<ul class="nav navbar-nav navbar-left">
-				<li><a href="index.html">Home</a></li>
-				<li><a href="VerifyPassword.jsp">Settings</a></li>
-				<%
-					if (type.equals("faculty")) {
-				%>
+		<ul class="nav navbar-nav navbar-left">
+			<li><a href="index.html">Home</a></li>
+			<li><a href="VerifyPassword.jsp">Settings</a></li>
+			<%
+				if (type.equals("faculty")) {
+			%>
 
-				<li><a href="ManageEvent.jsp" class="dropdown-toggle"
-					data-toggle="dropdown">Manage Event <i class="icon-angle-down"></i></a>
-					<ul class="dropdown-menu">
-						<li><a href="AddEvent.jsp">Add</a></li>
-						<li><a href="ManageEvent.jsp">Upadate</a></li>
-					</ul></li>
-				<%
-					}
-					} catch (Exception e) {
-						response.sendRedirect("/loginCheck");
-					}
-				%>
-				<li><a href="/logout">Logout</a></li>
-			</ul>
-		</div>
+			<li><a href="ManageEvent.jsp" class="dropdown-toggle"
+				data-toggle="dropdown">Manage Event <i class="icon-angle-down"></i></a>
+				<ul class="dropdown-menu">
+					<li><a href="AddEvent.jsp">Add</a></li>
+					<li><a href="ManageEvent.jsp">Update</a></li>
+				</ul></li>
+			<%
+				}
+				} catch (Exception e) {
+					response.sendRedirect("/loginCheck");
+				}
+			%>
+			<li><a href="/logout">Logout</a></li>
+		</ul>
+	</section>
+	<section id="middle" class="container">
 		<table>
 			<tr>
-				<td>
-					<h4>Subscribed Events</h4> <iframe src="SubscribedEvents.jsp"></iframe>
+				<td width="100%">
+					<h4>Subscribed Events</h4> <iframe width="100%"
+						src="SubscribedEvents.jsp"></iframe>
 				</td>
-				<td>
-					<h4>Comments on Subscribed Events</h4> <iframe
+			</tr>
+			<tr>
+				<td width="100%">
+					<h4>Comments on Subscribed Events</h4> <iframe width="100%"
 						src="SubscribedComment.jsp"></iframe>
 				</td>
 			<tr>

@@ -6,6 +6,11 @@
 		<schedule>every 2 minutes</schedule>
 	</cron>
 	<cron>
+		<url>/repair</url>
+		<description>Repair Subscribe Count</description>
+		<schedule>every 2 minutes</schedule>
+	</cron>
+	<cron>
 		<url>/sendWelcomeMail</url>
 		<description>Send Welcome Mail</description>
 		<schedule>every day 4:30</schedule>

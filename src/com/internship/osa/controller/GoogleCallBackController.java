@@ -3,6 +3,8 @@ package com.internship.osa.controller;
 import static com.internship.osa.dao.UserDetailsDao.save;
 import static com.internship.osa.dao.UserDetailsDao.check;
 import static com.internship.osa.dao.UserDetailsDao.getSavedName;
+import static com.internship.osa.dao.UserDetailsDao.returnType;
+import static com.internship.osa.dao.UserDetailsDao.returnValid;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -47,7 +49,7 @@ public class GoogleCallBackController extends HttpServlet {
 					+ code
 					+ "&client_id=710386576595-m43vqev3u5rq69lhlt4hdl00hntu8gcn.apps.googleusercontent.com"
 					+ "&client_secret=m-NoPPzsgVKLYzc0Agg6pdNM"
-					+ "&redirect_uri=http://summertrainingosa.appspot.com/googlecallback"
+					+ "&redirect_uri=http://internshiposa.appspot.com/googlecallback"
 					+ "&grant_type=authorization_code";
 
 			// post parameters
@@ -89,29 +91,36 @@ public class GoogleCallBackController extends HttpServlet {
 			// Convert JSON response into Pojo class
 			GooglePojo data = new Gson().fromJson(outputString,
 					GooglePojo.class);
-			//Register
-			HttpSession sess=request.getSession();
-			//Check ID
-			if(check(data.id))
-			{
+			// Register
+			HttpSession sess = request.getSession();
+			// Check ID
+			if (check(data.email)) {
 				DateFormat dateFormat = new SimpleDateFormat(
 						"yyyy/MM/dd HH:mm:ss");
 				Date date = new Date();
 				String id = dateFormat.format(date);
-				//Save Data and Login
-				save(data.id, data.name, data.id+id, "user", true, "google");
-				sess.setAttribute("Name",data.name);
-			}
-			else
-			{	
-				//Login
-				String name = getSavedName(data.id);
+				// Save Data and Login
+				save(data.email, data.name, id + "id:" + data.id, "student",
+						true, "google");
+				sess.setAttribute("Name", data.name);
+				sess.setAttribute("Type", "student");
+				sess.setAttribute("loginSource", "google");
+				System.out.println("Valid");
+				sess.setAttribute("uID", data.email);
+				response.sendRedirect("SelectRole.jsp");
+			} else {
+				// Login
+				String name = getSavedName(data.email);
+				String type = returnType((String) data.email);
+				boolean valid = returnValid((String) data.email);
+				if (valid == false)
+					type = "student";
+				sess.setAttribute("Type", type);
 				sess.setAttribute("Name", name);
+				System.out.println("Valid");
+				sess.setAttribute("uID", data.email);
+				response.sendRedirect("UserProfile.jsp");
 			}
-			System.out.println("Valid");
-			sess.setAttribute("Type","user");
-			sess.setAttribute("uID",data.id);
-			response.sendRedirect("UserProfile.jsp");
 			writer.close();
 			reader.close();
 

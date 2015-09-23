@@ -251,6 +251,24 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/repair</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>Load Recent Event</servlet-name>
+		<servlet-class>com.internship.osa.controller.LoadRecentEventsController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Load Recent Event</servlet-name>
+		<url-pattern>/loadRecentEvent</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Select Role</servlet-name>
+		<servlet-class>com.internship.osa.controller.SelectRoleController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Select Role</servlet-name>
+		<url-pattern>/selectRole</url-pattern>
+	</servlet-mapping>
+
 	<error-page>
 		<error-code>404</error-code>
 		<location>/404.html</location>

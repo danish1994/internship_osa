@@ -11,11 +11,13 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="static com.internship.osa.dao.OfyService.ofy"%>
 <%
+try{
+	
 	String eventID = request.getParameter("eventID");
 	Event pd = ofy().load().type(Event.class).id(eventID).now();
 	String desc = pd.getDescription();
 	String tag = pd.getTag();
-	Date date = pd.getEventDate();
+		Date date = pd.getEventDate();
 	int sub = ofy().load().type(Subscribe.class).filter("eventID",eventID).count();
 	int comments = ofy().load().type(Comments.class).filter("eventID",eventID).count();
 	String likeStatus = "no";
@@ -41,7 +43,7 @@
 	if(lIt.hasNext())
 	{
 		likeStatus="yes";
-		likeType="UnSubscribe";	
+		likeType="Unsubscribe";	
 	}
 %>
 
@@ -150,14 +152,14 @@
 							</div>
 							<table>
 								<tr>
-									<td><button class="btn-warning" onClick="showPictures()">Show
-											Images</button></td>
-									<td><button class="btn-warning" id="subscribe"
+									<td><button class="btn btn-warning"
+											onClick="showPictures()">Show Images</button></td>
+									<td><button class="btn btn-warning" id="subscribe"
 											onClick="modifyLike()">Subscribe</button></td>
-									<td><button class="btn-warning" id="pdfGen">Download
+									<td><button class="btn btn-warning" id="pdfGen">Download
 											as PDF</button></td>
-									<td><button class="btn-warning" onClick="addCalendar()">Add
-											To Calender</button></td>
+									<td><button class="btn btn-warning"
+											onClick="addCalendar()">Add To Calender</button></td>
 								</tr>
 							</table>
 
@@ -182,6 +184,7 @@
 							</script>
 							<script>
 								var doc = new jsPDF();
+								var name = '<%=tag%>';
 								var specialElementHandlers = {
 									'#editor' : function(element, renderer) {
 										return true;
@@ -200,7 +203,7 @@
 																		'width' : 170,
 																		'elementHandlers' : specialElementHandlers
 																	});
-													doc.save('Event.pdf');
+													doc.save(name+'.pdf');
 												});
 							</script>
 							<div id="editor"></div>
@@ -239,11 +242,11 @@
 									out += '<div class="media-body" ><div class="well"><div class="media-heading">';
 									out += '<strong>'+name+'</strong>&nbsp;';
 									if(arr[i].uID=='<%=uID%>')
-										out += '<button class="pull-right" id="'+arr[i].id+'" onClick="deleteComment(this.id)">Delete</button>';
+										out += '<button class="btn pull-right" id="'+arr[i].id+'" onClick="deleteComment(this.id)">Delete</button>';
 									out += '</div><p>'+arr[i].comment+'</p></div></div>';
 								}
 								if(l>0&&l<arr.length)
-									out+='<button class="btn btn-default" onClick="increaseLength()">Show More Comments</button>';
+									out+='<button class="btn btn-primary" onClick="increaseLength()">Show More Comments</button>';
 								else if(l==arr.length)
 									out+='<h4>No More Comments</h4>';
 								else
@@ -287,8 +290,7 @@
 							function modifyLike()
 							{
 								var xmlhttpDelete = new XMLHttpRequest();
-								var eventID = '<%=eventID%>
-								';
+								var eventID = '<%=eventID%>';
 									var url = '/subscribe?eventID=' + eventID;
 									xmlhttpDelete.onreadystatechange = function() {
 										if (xmlhttpDelete.readyState == 4
@@ -321,8 +323,8 @@
 										<textarea rows="8" class="form-control" placeholder="Comment"
 											id="commentBody"></textarea>
 									</div>
-									<button type="submit" class="btn-danger" onClick="addComment()">Submit
-										Comment</button>
+									<button type="submit" class="btn btn-danger"
+										onClick="addComment()">Submit Comment</button>
 								</div>
 								<%
 								}
@@ -369,5 +371,14 @@
 		</div>
 	</footer>
 	<!--/#footer-->
+	<%
+}catch(Exception e)
+{
+	out.println("<script type=\"text/javascript\">");
+	out.println("alert('Invalid Event. Please Update The Event.');");
+	out.println("window.location = 'events.html';");		
+	out.println("</script>");
+}
+	%>
 </body>
 </html>
