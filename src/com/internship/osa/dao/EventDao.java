@@ -33,14 +33,14 @@ public class EventDao {
 
 	public static void SubscribeCount(String eventID, int count) {
 		Event pd = ofy().load().type(Event.class).id(eventID).now();
-		pd.setSubCount(count++);
+		pd.setSubCount(count);
 		ofy().save().entity(pd).now();
 		System.out.println("Subscribe Count + 1");
 	}
 
 	public static void SubscribeMinus(String eventID, int count) {
 		Event pd = ofy().load().type(Event.class).id(eventID).now();
-		pd.setSubCount(count--);
+		pd.setSubCount(count);
 		ofy().save().entity(pd).now();
 		System.out.println("Subscribe Count - 1");
 	}
