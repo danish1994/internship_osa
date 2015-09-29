@@ -64,8 +64,7 @@
 	</section>
 	<!--/#title-->
 	<section id="middle" class="container">
-		<div class="collapse navbar-collapse">
-			<%
+		<%
 		String uID = null;
 		String type = null;
 		try{
@@ -79,10 +78,10 @@
 		{
 			Event e = it.next();
 	%>
-			<h3>
-				<a href="/UpdateEvent.jsp?eventID=<%=e.getEventID()%>"><%=e.getTag()%></a>
-			</h3>
-			<%
+		<h3>
+			<a href="/UpdateEvent.jsp?eventID=<%=e.getEventID()%>"><%=e.getTag()%></a>
+		</h3>
+		<%
 		}
 		}catch(Exception e)
 		{
@@ -90,7 +89,6 @@
 		}
 		
 	%>
-		</div>
 	</section>
 
 	<footer id="footer" class="midnight-blue">
