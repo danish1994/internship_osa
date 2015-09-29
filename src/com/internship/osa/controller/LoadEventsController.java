@@ -35,6 +35,11 @@ public class LoadEventsController extends HttpServlet {
 					JSONObject eventDetails = new JSONObject();
 					String eventDate = timeFormat.format(pc.getEventDate());
 					String desc = pc.getDescription();
+					if(desc.length()>100)
+					{
+						desc = desc.substring(0, 100);
+						desc = desc + "...";
+					}
 					try {
 						eventDetails.put("imgSrc", pc.getEventID());
 						eventDetails.put("tag", pc.getTag());
@@ -74,6 +79,11 @@ public class LoadEventsController extends HttpServlet {
 						e.printStackTrace();
 					}
 					String desc = pc.getDescription();
+					if(desc.length()>100)
+					{
+						desc = desc.substring(0, 100);
+						desc = desc + "...";
+					}
 					if (type.equals("today")) {
 						if (todayDate.equals(eventDate)) {
 							try {

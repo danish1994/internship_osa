@@ -16,6 +16,7 @@ try{
 	String eventID = request.getParameter("eventID");
 	Event pd = ofy().load().type(Event.class).id(eventID).now();
 	String desc = pd.getDescription();
+	String descCal = desc.replaceAll("[\\t\\n\\r]"," ");;
 	String tag = pd.getTag();
 		Date date = pd.getEventDate();
 	int sub = ofy().load().type(Subscribe.class).filter("eventID",eventID).count();
@@ -148,7 +149,7 @@ try{
 										class="icon-comment"></i> <a href="blog-item.html#comments"
 										id="commentCount"></a></span>
 								</div>
-								<p class="lead"><%= desc %></p>
+								<p class="lead" style="word-wrap: break-word"><%= desc %></p>
 							</div>
 							<table>
 								<tr>
@@ -176,7 +177,7 @@ try{
 									var startDate = '<%=showStartDate%>';
 									var endDate = '<%=showEndDate%>';
 									var place = '<%=place%>';
-									var desc = '<%=desc%>';
+									var desc = '<%=descCal%>';
 									var link = 'https://www.google.com/calendar/render?action=TEMPLATE&text='+tag+'&dates='+startDate+'/'+endDate+'&details='+desc+'&location='+place+'&sf=true&output=xml';
 									console.log(link);
 									window.location = link;
