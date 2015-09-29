@@ -7,6 +7,7 @@
 <%@ page import="java.util.Iterator"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Date"%>
+<%@ page import="java.util.Calendar"%>
 <%@ page import="java.text.DateFormat"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="static com.internship.osa.dao.OfyService.ofy"%>
@@ -28,9 +29,14 @@ try{
 	String place = pd.getPlace();
 	DateFormat calendarFormat = new SimpleDateFormat("yyyyMMdd");
 	Date startDate = date;
-	Date endDate = date;
+	Calendar c = Calendar.getInstance();
+	c.setTime(startDate);
+	c.add(Calendar.DATE, 1);
+	Date endDate = c.getTime();
 	String showStartDate = calendarFormat.format(startDate);
 	String showEndDate = calendarFormat.format(endDate);
+	System.out.println(showStartDate);
+	System.out.println(showEndDate);
 	DateFormat timeFormat = new SimpleDateFormat("dd/MM/YYYY");
 	String showDate = timeFormat.format(date);
 	try{
