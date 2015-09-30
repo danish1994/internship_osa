@@ -20,29 +20,40 @@ import java.io.*;
 
 @SuppressWarnings("serial")
 public class ForgotController extends HttpServlet {
-	public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException,ServletException
-	{
-		String uID=req.getParameter("email");
-		Properties props = new Properties();
-		Session session = Session.getDefaultInstance(props, null);
-		Date date = new Date();
-		//Generating Random Password
-		String randomKey = UUID.randomUUID().toString();
-		//Save Random Password
-		save(uID,randomKey,date);
-		//Mail Body
-		String msgBody = "Please Reset Your Password.\nPlease Visit the link to Change the Password:\nhttp://internshiposa.appspot.com/ChangePassword.jsp?cp="+randomKey+"\nThe Link Expires in 30 minutes.";
-		Message msg = new MimeMessage(session);
-		//Forgot Email
-	    try {
-			msg.setFrom(new InternetAddress("danish8802204230@gmail.com", "Event Creater"));
-			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(uID, "User"));
-		    msg.setSubject("Password Reset");
-		    msg.setText(msgBody);
-		    Transport.send(msg);
-		} catch (MessagingException e) {
-			e.printStackTrace();
+	public void doPost(HttpServletRequest req, HttpServletResponse res)
+			throws IOException, ServletException {
+		try {
+			String uID = req.getParameter("email");
+			Properties props = new Properties();
+			Session session = Session.getDefaultInstance(props, null);
+			Date date = new Date();
+			// Generating Random Password
+			String randomKey = UUID.randomUUID().toString();
+			// Save Random Password
+			save(uID, randomKey, date);
+			// Mail Body
+			String msgBody = "Please Reset Your Password.\nPlease Visit the link to Change the Password:\nhttp://internshiposa.appspot.com/ChangePassword.jsp?cp="
+					+ randomKey + "\nThe Link Expires in 30 minutes.";
+			Message msg = new MimeMessage(session);
+			// Forgot Email
+			try {
+				msg.setFrom(new InternetAddress("danish8802204230@gmail.com",
+						"Event Creater"));
+				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(
+						uID, "User"));
+				msg.setSubject("Password Reset");
+				msg.setText(msgBody);
+				Transport.send(msg);
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
+			res.sendRedirect("forgot-confirm.html");
+		} catch (Exception e) {
+			PrintWriter out = res.getWriter();
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Oops. Something went wrong!');");
+			out.println("window.location = '/loginCheck';");
+			out.println("</script>");
 		}
-		res.sendRedirect("forgot-confirm.html");
 	}
 }
