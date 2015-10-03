@@ -1,12 +1,4 @@
-<!-- Indices written at Tue, 29 Sep 2015 22:54:32 IST -->
+<!-- Indices written at Thu, 1 Oct 2015 13:25:27 IST -->
 
-<datastore-indexes>
+<datastore-indexes/>
 
-    <!-- Used 1 time in query history -->
-    <datastore-index kind="Comments" ancestor="false" source="auto">
-        <property name="eventID" direction="asc"/>
-        <property name="valid" direction="asc"/>
-        <property name="date" direction="desc"/>
-    </datastore-index>
-
-</datastore-indexes>

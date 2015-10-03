@@ -7,8 +7,6 @@ import static com.internship.osa.dao.SubscribeDao.addSubscribe;
 import static com.internship.osa.dao.SubscribeDao.removeSubscribe;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -56,10 +54,8 @@ public class SubscribeController extends HttpServlet {
 				}
 			} else {
 				if (SubscribeStatus.equals("no")) {
-					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 					Date date = new Date();
-					String id = dateFormat.format(date);
-					addSubscribe(uID, eventID, id + uID);
+					addSubscribe(uID, eventID, date.toString() + uID);
 					SubscribeCount(eventID, count+1);
 					try {
 						json.put("SubscribeType", "Unsubscribe");
